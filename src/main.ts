@@ -23,16 +23,12 @@ function frameloop() {
   xPosition += xDirection * xSpeed
   yPosition += yDirection * ySpeed
 
-  if (xPosition <= -canvas.width/2) {
-    xDirection = 1
-  } else if (xPosition >= canvas.width/2){
-    xDirection = -1
+  if (xPosition <= -canvas.width/2 || xPosition >= canvas.width/2) {
+    xDirection = -xDirection
   }
 
-  if (yPosition <= -canvas.height/2){
-    yDirection = 1
-  } else if (yPosition >= canvas.height/2){
-    yDirection = -1
+  if (yPosition <= -canvas.height/2 || yPosition >= canvas.height/2){
+    yDirection = -yDirection
   }
 
   requestAnimationFrame(frameloop)
