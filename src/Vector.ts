@@ -14,6 +14,19 @@ class Vector{
         this.magnitude = pythagorean(x, y)
         this.angle = Math.atan2(y, x)
     }
+
+    add(other: Vector): Vector {
+        return new Vector(this.x + other.x, this.y + other.y)
+    }
+    subtract(other: Vector): Vector {
+        return new Vector(this.x - other.x, this.y - other.y)
+    }
+    multiply(other: Vector): Vector {
+        return new Vector(this.x * other.x, this.y * other.y)
+    }
+    divide(other: Vector): Vector {
+        return new Vector(this.x / other.x, this.y / other.y)
+    }
 }
 
 export { Vector }
