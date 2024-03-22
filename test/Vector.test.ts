@@ -1,5 +1,5 @@
 import { test, expect, describe } from 'vitest'
-import { Vector } from '../src/Vector'
+import { Vector } from '../src/lib/math/Vector'
 
 test("construction", () => {
     const v = new Vector(3, 4)
