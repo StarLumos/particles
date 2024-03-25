@@ -1,5 +1,6 @@
-import { test, expect, describe } from 'vitest'
+import { test, expect, describe, beforeEach } from 'vitest'
 import { Vector } from '../src/lib/math/Vector'
+
 
 test("construction", () => {
     const v = new Vector(3, 4)
@@ -96,3 +97,42 @@ describe("arithmetic operations", () => {
         })
     })    
 })
+describe("side effects", () => {
+    let v1: Vector
+
+    beforeEach(() => {
+        v1 = new Vector(3,4)
+    })
+
+    test("set x synchronizes magnitude and angle", () => {
+        v1.x += 1
+        expect(v1.x).toBe(4)
+        expect(v1.y).toBe(4)
+        expect(v1.magnitude).toBeCloseTo(5.656)
+        expect(v1.angle).toBeCloseTo(Math.PI/4)
+    })
+    test("set y synchronizes magnitude and angle", () => {
+        v1.y += 1
+        expect(v1.x).toBe(3)
+        expect(v1.y).toBe(5)
+        expect(v1.magnitude).toBeCloseTo(5.83)
+        expect(v1.angle).toBeCloseTo(1.03)
+    })
+    test("set magnitude synchronizes x and y", () => {
+        v1.magnitude += 1
+        expect(v1.x).toBeCloseTo(3.6)
+        expect(v1.y).toBeCloseTo(4.8)
+        expect(v1.magnitude).toBeCloseTo(6)
+        expect(v1.angle).toBeCloseTo(0.93)
+    })
+    test("set angle synchronizes x and y", () => {
+        v1.angle += Math.PI/6
+        expect(v1.x).toBeCloseTo(0.60)
+        expect(v1.y).toBeCloseTo(4.96)
+        expect(v1.magnitude).toBeCloseTo(5)
+        expect(v1.angle).toBeCloseTo(1.45)
+    })
+})
+
+
+
