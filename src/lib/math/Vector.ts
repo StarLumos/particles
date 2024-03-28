@@ -54,6 +54,9 @@ class Vector{
     divide(other: Vector): Vector {
         return new Vector(this.x / other.x, this.y / other.y)
     }
+    clone(): Vector {
+        return new Vector(this.x, this.y)
+    }
 }
 
 export { Vector }

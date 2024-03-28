@@ -133,6 +133,29 @@ describe("side effects", () => {
         expect(v1.angle).toBeCloseTo(1.45)
     })
 })
+describe("cloning", () => {
+    let v1: Vector
 
+    beforeEach(() => {
+        v1 = new Vector(3,4)
+    })
+
+    test("clones with identical values", () => {
+        const v2 = v1.clone()
+        
+        expect(v2.x).toBe(3)
+        expect(v2.y).toBe(4)
+        expect(v2.magnitude).toBe(5)
+        expect(v2.angle).toBeCloseTo(0.927)
+    })
+    test("preserve original values", () => {
+        const v2 = v1.clone().add(new Vector(1,1))
+
+        expect(v1.x).toBe(3)
+        expect(v1.y).toBe(4)
+        expect(v1.magnitude).toBe(5)
+        expect(v1.angle).toBeCloseTo(0.927)
+    })
+})
 
 
