@@ -1,4 +1,5 @@
 import { Vector } from "./lib/math/Vector"
+import { Particle } from "./Particle"
 
 const canvas = document.querySelector("canvas")!
 
@@ -9,29 +10,6 @@ const graphics = canvas.getContext("2d")!
 
 graphics.scale(1, -1)
 graphics.translate(canvas.width / 2, -canvas.height / 2)
-
-class Particle {
-    position: Vector
-    velocity: Vector
-    acceleration: Vector
-
-    constructor() {
-        this.position = new Vector(0, 0)
-        this.velocity = new Vector(0, 0)
-        this.acceleration = new Vector(0, 0)
-    }
-    update() {
-        this.position = this.position.add(this.velocity)
-        this.velocity = this.velocity.add(this.acceleration)
-        this.acceleration = new Vector(0, 0)
-    }
-    accelerate(force: Vector) {
-        this.acceleration = this.acceleration.add(force)
-    }
-    render() {
-        graphics.fillRect(this.position.x, this.position.y, 50, 50)
-    }
-}
 
 const a = new Particle()
 a.position = new Vector(-200,0)
@@ -54,7 +32,7 @@ function frameloop() {
         a.accelerate(new Vector(-0.2, 0))
     }
     
-    a.render()
+    a.render(graphics)
     a.update()
 
     requestAnimationFrame(frameloop)
