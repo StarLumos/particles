@@ -1,70 +1,63 @@
+import { Vector } from "./lib/math/Vector"
+
 const canvas = document.querySelector("canvas")!
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-const ctx = canvas.getContext("2d")!
+const graphics = canvas.getContext("2d")!
 
-ctx.scale(1, -1)
-ctx.translate(canvas.width / 2, -canvas.height / 2)
+graphics.scale(1, -1)
+graphics.translate(canvas.width / 2, -canvas.height / 2)
 
-class Cube {
-  color: string
-  xSpeed: number
-  ySpeed: number
-  xPosition: number
-  xDirection: number
-  yPosition: number
-  yDirection: number
-  width: number
-  height: number
-  
-  constructor(color: string, xSpeed: number, ySpeed: number, xPosition: number, yPosition: number, xDirection: number, yDirection: number, width: number, height: number) {
-    this.color = color
-    this.xSpeed = xSpeed
-    this.ySpeed = ySpeed
-    this.xPosition = xPosition
-    this.yPosition = yPosition
-    this.xDirection = xDirection
-    this.yDirection = yDirection
-    this.width = width
-    this.height = height
-  }
+class Particle {
+    position: Vector
+    velocity: Vector
+    acceleration: Vector
 
-  move() {
-    this.xPosition += this.xDirection * this.xSpeed
-    this.yPosition += this.yDirection * this.ySpeed
-  }
-  handle_bounce() {
-    if (this.xPosition <= -canvas.width/2 || this.xPosition >= canvas.width/2) {
-      this.xDirection = -this.xDirection
+    constructor() {
+        this.position = new Vector(0, 0)
+        this.velocity = new Vector(0, 0)
+        this.acceleration = new Vector(0, 0)
     }
-    if (this.yPosition <= -canvas.height/2 || this.yPosition >= canvas.height/2){
-      this.yDirection = -this.yDirection
+    update() {
+        this.position = this.position.add(this.velocity)
+        this.velocity = this.velocity.add(this.acceleration)
+        this.acceleration = new Vector(0, 0)
     }
-  }
-  render() {
-    ctx.fillStyle = this.color
-    ctx.fillRect(this.xPosition, this.yPosition, this.width, this.height)
-  }
+    accelerate(force: Vector) {
+        this.acceleration = this.acceleration.add(force)
+    }
+    render() {
+        graphics.fillRect(this.position.x, this.position.y, 50, 50)
+    }
 }
 
-var cube1 = new Cube('red', 5, 5, 0, 0, -1, 1, 50, 50)
-var cube2 = new Cube('blue', 5, 5, 0, 0, -1, 1, 50, 50)
+const a = new Particle()
+a.position = new Vector(-200,0)
 
+const keys = { } as any
+document.addEventListener("keydown", function(event) {
+    keys[event.key] = true
+})
+document.addEventListener("keyup", function(event) {
+    keys[event.key] = false
+})
 
 function frameloop() {
-  ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height)
+    graphics.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height)
 
-  cube1.render()
-  cube1.move()
-  cube1.handle_bounce()
+    if (keys["d"]) {
+        a.accelerate(new Vector(0.2, 0))
+    }
+    if (keys["a"]) {
+        a.accelerate(new Vector(-0.2, 0))
+    }
+    
+    a.render()
+    a.update()
 
-  cube2.render()
-  cube2.move()
-  cube2.handle_bounce()
-
-  requestAnimationFrame(frameloop)
+    requestAnimationFrame(frameloop)
 }
 
 frameloop()
