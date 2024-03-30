@@ -32,9 +32,10 @@ function frameloop() {
         a.accelerate(new Vector(-0.2, 0))
     }
     
-    a.render(graphics)
+    a.wander(graphics)
     a.update()
-
+    a.render(graphics)
+    
     requestAnimationFrame(frameloop)
 }
 
