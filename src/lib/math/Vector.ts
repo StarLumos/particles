@@ -1,7 +1,5 @@
 import { pythagorean } from "./geometry"
 
-
-
 class Vector{
     private _x: number
     private _y: number
@@ -42,17 +40,29 @@ class Vector{
         this._x = this._magnitude * Math.cos(this._angle)
         this._y = this._magnitude * Math.sin(this._angle)
     }
-    add(other: Vector): Vector {
-        return new Vector(this.x + other.x, this.y + other.y)
+    add(other: Vector | number): Vector {
+        if (other instanceof Vector)
+            return new Vector(this.x + other.x, this.y + other.y)
+        else
+            return new Vector(this.x + other, this.y + other)
     }
-    subtract(other: Vector): Vector {
-        return new Vector(this.x - other.x, this.y - other.y)
+    subtract(other: Vector | number): Vector {
+        if (other instanceof Vector)
+            return new Vector(this.x - other.x, this.y - other.y)
+        else
+            return new Vector(this.x - other, this.y - other)
     }
-    multiply(other: Vector): Vector {
-        return new Vector(this.x * other.x, this.y * other.y)
+    multiply(other: Vector | number): Vector {
+        if (other instanceof Vector)
+            return new Vector(this.x * other.x, this.y * other.y)
+        else
+            return new Vector(this.x * other, this.y * other)
     }
-    divide(other: Vector): Vector {
-        return new Vector(this.x / other.x, this.y / other.y)
+    divide(other: Vector | number): Vector {
+        if (other instanceof Vector)
+            return new Vector(this.x / other.x, this.y / other.y)
+        else 
+            return new Vector(this.x / other, this.y / other)
     }
     clone(): Vector {
         return new Vector(this.x, this.y)
