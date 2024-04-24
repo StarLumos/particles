@@ -12,11 +12,29 @@
       }
       canvas {
         background-color: white;
+        position: absolute;
+        z-index: 0;
+      }
+      .sliders {
+        position: absolute;
+        width: 200px;
+        height: 800px;
+        z-index: 1;
       }
     </style>
   </head>
   <body>
     <canvas></canvas>
+    <div class='sliders'>
+      <h3>Wander</h3>
+      <input type='range' min='0' max='10' value='1' id='wander-slider'>
+      <h3>Cohesion</h3>
+      <input type='range' min='0' max='10' value='1' id='cohesion-slider'>
+      <h3>Separation</h3>
+      <input type='range' min='0' max='10' value='1' id='separation-slider'>
+      <h3>Alignment</h3>
+      <input type='range' min='0' max='10' value='1' id='alignment-slider'>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

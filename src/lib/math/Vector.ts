@@ -67,6 +67,12 @@ class Vector{
     clone(): Vector {
         return new Vector(this.x, this.y)
     }
+    limit(maximum: number): Vector {
+        const copy = this.clone()
+        if (this.magnitude > maximum)
+            copy.magnitude = maximum
+        return copy
+    }
 }
 
 export { Vector }
